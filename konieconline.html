@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gratulacje!</title>
+<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet">
+<link rel="icon" href="bhl.jpg" type="image/jpeg">
+<style>
+:root { --accent:#00ffcc; --bg:#0a0a0a; }
+
+html, body { margin:0; padding:0; height:100%; font-family:'Share Tech Mono', monospace; background:var(--bg); color:var(--accent); display:flex; justify-content:center; align-items:center; }
+
+.container {
+  width:90%; max-width:800px; padding:25px 35px;
+  text-align:center; background:rgba(0,0,0,0.75); border:2px solid var(--accent);
+  border-radius:12px; box-shadow:0 0 20px rgba(0,255,204,0.2);
+}
+
+h2 { color:#ff0055; font-size:2.2rem; margin-bottom:20px; font-weight:bold; }
+.special-text { font-size:1.25rem; font-weight:900; color:red; margin:20px 0; line-height:1.4; text-align:center; }
+p { font-size:1.1rem; font-weight:bold; }
+button {
+  background:none; border:2px solid var(--accent); color:var(--accent);
+  padding:14px; font-size:1rem; cursor:pointer; margin-top:15px; font-weight:bold; text-transform:uppercase;
+  border-radius:6px; width:100%; transition: all 0.3s ease;
+}
+button:hover { background-color:var(--accent); color:#000; }
+img { max-width:180px; margin-top:15px; border-radius:8px; }
+</style>
+</head>
+<body>
+<div class="container">
+  <h2>🎉 GRATULACJE! 🎉</h2>
+  <p>Rozwiązałeś wszystkie zadania poprawnie!</p><br>
+  Twoje umiejętności przetrwania w świecie pełnym pułapek i zagadek zasługują na medal… albo przynajmniej wirtualny uścisk dłoni.<br><br>
+  Dzięki, że grałeś!<br>
+  <div class="special-text">
+    Teraz nadchodzi Twój czas na większą przygodę...<br>
+    BEST Hacking League czeka właśnie na Ciebie!
+  </div><br>
+  <button onclick="window.location.href='https://besthackingleague.pl/'">ZAPISZ SIĘ!</button>
+  <img src="bhl.jpg" alt="BHL Logo">
+</div>
+</body>
+</html>

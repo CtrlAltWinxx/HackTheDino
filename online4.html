@@ -6,184 +6,323 @@
 <title>Stacja 4</title>
 <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet">
 <link rel="icon" href="bhl.jpg" type="image/jpeg">
-<link rel="shortcut icon" href="bhl.jpg" type="image/jpeg">
 <style>
 :root { --accent:#00ffcc; --bg:#0a0a0a; }
-
-html, body { margin:0; padding:0; height:100%; overflow-x:hidden; font-family:'Share Tech Mono', monospace; background:var(--bg); color:var(--accent); }
-
-canvas { position: fixed; inset:0; z-index:0; display:block; }
-
-.container {
-  width:90%; max-width:800px; margin:80px auto; padding:25px 35px;
-  text-align:center; background:rgba(0,0,0,0.75); border:2px solid var(--accent);
-  border-radius:12px; box-shadow:0 0 20px rgba(0,255,204,0.2); position:relative; z-index:1;
-  transition:all 0.3s ease;
-}
-
-h2 { color:#ff0055; font-size:2.2rem; margin-bottom:20px; font-weight:bold; }
-.special-text { font-size:1.25rem; font-weight:900; color:red; margin:20px 0; line-height:1.4; text-align:center; }
-p, code { font-size:1.1rem; font-weight:bold; word-wrap:break-word; }
-code { display:block; margin:10px 0; font-size:1.2rem; line-height:1.4; }
-
-input {
-  background:#000; border:2px solid var(--accent); color:var(--accent);
-  padding:12px; margin-top:10px; width:100%; font-size:1rem; font-weight:bold; box-sizing:border-box; border-radius:6px;
-}
-
-button {
-  background:none; border:2px solid var(--accent); color:var(--accent);
-  padding:14px; font-size:1rem; cursor:pointer; margin-top:15px; font-weight:bold; text-transform:uppercase;
-  border-radius:6px; width:100%; transition: all 0.3s ease;
-}
-button:hover { background-color:var(--accent); color:#000; }
-
-.decoded, .error {
-  margin-top:20px; padding:15px; border-radius:8px; font-size:1rem; font-weight:bold; text-align:center;
-}
-.decoded { background:rgba(0,255,204,0.05); border:1px solid var(--accent); box-shadow:0 0 10px rgba(0,255,204,0.3); }
-.error { color:red; animation:blink 1s step-start infinite; }
-
-@keyframes blink { 50% { opacity:0; } }
-
-img { max-width:180px; margin-top:15px; border-radius:8px; }
-
-/* PRZYCISK JĘZYKOWY */
-#lang-switch { position:fixed; top:15px; right:20px; z-index:10; }
-#lang-switch button {
-  background:transparent; border:2px solid var(--accent); color:var(--accent);
-  padding:6px 12px; font-size:0.9rem; border-radius:8px; cursor:pointer;
-  box-shadow:0 0 10px var(--accent); transition:all 0.3s ease;
-}
-#lang-switch button:hover { background:var(--accent); color:#000; }
-
-/* RESPONSYWNOŚĆ */
-@media (max-width:600px){
-  .container{margin:40px 10px; padding:15px 20px; border-radius:8px;}
-  h2{font-size:1.5rem;}
-  p, code{font-size:1rem;}
-  code{font-size:1rem;}
-  .special-text{font-size:1.15rem;}
-  button,input{padding:12px; font-size:0.95rem;}
-}
-</style>
+    body {
+      margin: 0;
+      background: #0a0a0a;
+      color: #00ffcc;
+      font-family: 'Share Tech Mono', monospace;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      overflow: hidden;
+    }
+    .container {
+      width: 95%;
+      max-width: 900px;
+      padding: 20px;
+      background: rgba(0, 0, 0, 0.75);
+      border: 2px solid #00ffcc;
+      border-radius: 12px;
+      text-align: center;
+      position: relative;
+    }
+    h1 { color: #ff0055; }
+    canvas {
+      width: 100%;
+      height: auto;
+      border: 2px solid #00ffcc;
+      border-radius: 8px;
+      margin: 10px auto;
+      background: linear-gradient(180deg, #000 0%, #050505 100%);
+    }
+    button {
+      background: none;
+      border: 2px solid #00ffcc;
+      color: #00ffcc;
+      padding: 8px 16px;
+      margin: 5px;
+      font-weight: bold;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #00ffcc;
+      color: #000;
+    }
+    .overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.8);
+      display: none;
+      justify-content: center;
+      align-items: center;
+    }
+    .card {
+      background: #000;
+      border: 2px solid #00ffcc;
+      border-radius: 12px;
+      padding: 20px;
+      text-align: center;
+      max-width: 400px;
+      width: 90%;
+    }
+    .translate-btn {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      font-size: 14px;
+      padding: 6px 12px;
+    }
+  </style>
 </head>
 <body>
-<canvas id="bgCanvas"></canvas>
+  <div class="container">
+    <button class="translate-btn" id="translateBtn">EN</button>
+    <h1 data-pl="Go, T-Rex! Go!" data-en="Go, T-Rex! Go!">Go, T-Rex! Go!</h1>
+    <div id="gameInfo">
+      <span id="scoreLabel" data-pl="Wynik" data-en="Score">Wynik</span>:
+      <span id="score">0</span> |
+      <span id="livesLabel" data-pl="Życia" data-en="Lives">Życia</span>:
+      <span id="lives">3</span> |
+      <span id="goalLabel" data-pl="Cel" data-en="Goal">Cel</span>:
+      <span id="goal">111</span> <span id="ptsLabel" data-pl="pkt" data-en="pts">pkt</span>
+    </div>
+    <canvas id="game"></canvas>
+    <div>
+      <button id="startBtn" data-pl="START" data-en="START">START</button>
+      <button id="resetBtn" data-pl="RESET" data-en="RESET">RESET</button>
+    </div>
+    <p><strong><span id="controlsText"
+      data-pl="Sterowanie: Spacja lub Dotknięcie ekranu gry = skok"
+      data-en="Controls: Space or Tap the game area = jump">
+      Sterowanie: Spacja lub Dotknięcie ekranu gry = skok
+    </span></strong></p>
+    <p class="instruction">
+      <span id="instruction"
+        data-pl="Zbieraj żetony B#L i unikaj drzew, aby przejść stację."
+        data-en="Collect B#L tokens and avoid trees to pass the stage.">
+        Zbieraj żetony B#L i unikaj drzew, aby przejść stację.
+      </span>
+    </p>
+  </div>
 
-<!-- PRZYCISK TŁUMACZENIA -->
-<div id="lang-switch"><button onclick="toggleLang()">EN</button></div>
+  <div id="overlay" class="overlay">
+    <div class="card">
+      <h2 id="endMessage" data-pl="WYGRAŁEŚ!" data-en="YOU WON!"></h2>
+      <button id="playAgain" data-pl="Zagraj ponownie" data-en="Play again">Zagraj ponownie</button>
+      <button id="finalBtn" style="display:none" data-pl="EKRAN FINAŁOWY" data-en="FINAL SCREEN">EKRAN FINAŁOWY</button>
+    </div>
+  </div>
 
-<div class="container" id="taskContainer">
-<h2 id="header">&gt; STACJA [4/4] – JAVASCRIPT</h2>
-<p id="question">Co wyświetli konsola po wykonaniu tego kodu?</p>
-<code>
-const hacker = { name: "Alice", skills: ["JS", "Python"] };<br>
-hacker.skills.push("C++");<br>
-console.log(hacker.skills[2]);
-</code>
-<input type="text" id="answerInput" placeholder="Twoja odpowiedź">
-<button onclick="checkAnswer()">SPRAWDŹ</button>
-</div>
-
-<div class="container" id="resultContainer" style="display:none;"></div>
-
-<script>
-// --- TŁUMACZENIE ---
-let currentLang="PL";
-function toggleLang(){
-  const btn=document.querySelector("#lang-switch button");
-  if(currentLang==="PL"){
-    currentLang="EN"; btn.textContent="PL";
-    document.getElementById("header").innerHTML="&gt; STATION [4/4] – JAVASCRIPT";
-    document.getElementById("question").textContent="What will the console display after running this code?";
-    document.getElementById("answerInput").placeholder="Your answer";
-    document.querySelector("#taskContainer button").textContent="CHECK";
-  } else {
-    currentLang="PL"; btn.textContent="EN";
-    document.getElementById("header").innerHTML="&gt; STACJA [4/4] – JAVASCRIPT";
-    document.getElementById("question").textContent="Co wyświetli konsola po wykonaniu tego kodu?";
-    document.getElementById("answerInput").placeholder="Twoja odpowiedź";
-    document.querySelector("#taskContainer button").textContent="SPRAWDŹ";
-  }
-}
-
-// --- SPRAWDZENIE ODPOWIEDZI ---
-function checkAnswer(){
-  const val=document.getElementById('answerInput').value.trim();
-  const task=document.getElementById('taskContainer');
-  const result=document.getElementById('resultContainer');
-  task.style.display='none'; result.style.display='block';
-
-  if(val.toLowerCase()==='c++'){
-    if(currentLang==="PL"){
-      result.innerHTML=`
-        <div class="decoded">
-          <h2>🎉 GRATULACJE! 🎉</h2>
-          <p>Rozwiązałeś wszystkie zadania poprawnie!</p><br>
-          Twoje umiejętności przetrwania w świecie pełnym pułapek i dziwnych zagadek zasługują na medal… albo przynajmniej wirtualny uścisk dłoni.<br><br>
-          Dzięki, że grałeś!<br>
-          <div class="special-text">
-            Teraz nadchodzi Twój czas na większą przygodę...<br>
-            BEST Hacking League czeka właśnie na Ciebie!
-          </div><br>
-          <button onclick="window.location.href='https://besthackingleague.pl/'">ZAPISZ SIĘ!</button>
-          <img src="bhl.jpg" alt="BHL Logo">
-        </div>`;
-    } else {
-      result.innerHTML=`
-        <div class="decoded">
-          <h2>🎉 CONGRATULATIONS! 🎉</h2>
-          <p>You solved all challenges correctly!</p><br>
-          Your survival skills in a world full of traps and strange puzzles deserve a medal… or at least a virtual handshake.<br><br>
-          Thanks for playing!<br>
-          <div class="special-text">
-            Now it's your time for a bigger adventure...<br>
-            BEST Hacking League awaits you!
-          </div><br>
-          <button onclick="window.location.href='https://besthackingleague.pl/'">SIGN UP!</button>
-          <img src="bhl.jpg" alt="BHL Logo">
-        </div>`;
+  <script>
+    const translateBtn = document.getElementById('translateBtn');
+    let currentLang = localStorage.getItem('lang') || 'pl';
+    function applyTranslation(lang) {
+      document.querySelectorAll('[data-pl]').forEach(el => {
+        const t = el.getAttribute(`data-${lang}`);
+        if (t !== null) el.textContent = t;
+      });
+      translateBtn.textContent = lang === 'pl' ? 'EN' : 'PL';
+      if (lastEndState !== null) {
+        endMessage.textContent = lastEndState
+          ? (lang === 'pl' ? "WYGRAŁEŚ!" : "YOU WON!")
+          : (lang === 'pl' ? "PRZEGRAŁEŚ!" : "YOU LOST!");
+      }
     }
-  } else {
-    if(currentLang==="PL"){
-      result.innerHTML=`<div class="error">BŁĘDNA ODPOWIEDŹ!<br><button onclick="location.reload()">&gt; SPRÓBUJ PONOWNIE</button></div>`;
-    } else {
-      result.innerHTML=`<div class="error">WRONG ANSWER!<br><button onclick="location.reload()">&gt; TRY AGAIN</button></div>`;
+    translateBtn.addEventListener('click', () => {
+      currentLang = currentLang === 'pl' ? 'en' : 'pl';
+      localStorage.setItem('lang', currentLang);
+      applyTranslation(currentLang);
+    });
+
+    const canvas = document.getElementById('game');
+    const ctx = canvas.getContext('2d');
+    const scoreEl = document.getElementById('score');
+    const livesEl = document.getElementById('lives');
+    const goalEl  = document.getElementById('goal');
+
+    const overlay = document.getElementById('overlay');
+    const endMessage = document.getElementById('endMessage');
+    const playAgain = document.getElementById('playAgain');
+    const finalBtn = document.getElementById('finalBtn');
+
+    function resizeCanvas() {
+      canvas.width = canvas.offsetWidth;
+      canvas.height = 180;
     }
-  }
-}
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
 
-// --- ANIMACJA KÓŁEK ---
-const canvas=document.getElementById('bgCanvas');
-const ctx=canvas.getContext('2d');
-let W=window.innerWidth,H=window.innerHeight;
-canvas.width=W; canvas.height=H;
+    const CONFIG = { speed: 3, gravity: 0.9, jump: -16, goal: 50 };
+    goalEl.textContent = CONFIG.goal;
 
-const colors=["rgba(0,255,204,0.2)","rgba(128,0,255,0.2)","rgba(0,128,255,0.2)"];
-class Circle{
-  constructor(){this.reset();}
-  reset(){this.x=Math.random()*W; this.y=Math.random()*H; this.radius=Math.random()*18+8;
-    this.speed=Math.random()*0.05+0.02; this.angle=Math.random()*Math.PI*2;
-    this.color=colors[Math.floor(Math.random()*colors.length)];}
-  update(){this.angle+=this.speed; this.y+=Math.sin(this.angle)*2; this.x+=Math.cos(this.angle)*2;
-    if(this.x<0||this.x>W||this.y<0||this.y>H) this.reset();}
-  draw(){ctx.beginPath(); ctx.arc(this.x,this.y,this.radius,0,Math.PI*2); ctx.fillStyle=this.color; ctx.fill();}
-}
+    let running = false;
+    let score = 0, lives = 3;
+    let obstacles = [], collectibles = [];
+    let spawnTimer = 0;
+    const seq = ["B","#","L"];
+    let seqIndex = 0;
+    let lastEndState = null;
 
-const circles=[]; for(let i=0;i<80;i++) circles.push(new Circle());
+    const player = {x:60, y:0, vy:0, w:40, h:35, onGround:true, legPhase:0};
+    player.y = canvas.height - player.h - 16;
 
-function animateBackground(){
-  ctx.fillStyle='rgba(10,10,10,0.2)'; ctx.fillRect(0,0,W,H);
-  circles.forEach(c=>{c.update(); c.draw();});
-  requestAnimationFrame(animateBackground);
-}
-animateBackground();
+    function drawDino(p) {
+      ctx.fillStyle = '#9ae6b4';
+      ctx.fillRect(p.x, p.y, p.w, p.h);
+      ctx.fillRect(p.x + p.w - 12, p.y + 5, 14, 14);
+      ctx.fillRect(p.x + 8,  p.y + p.h - 6, 10, p.legPhase ? 6 : 4);
+      ctx.fillRect(p.x + 22, p.y + p.h - 6, 10, p.legPhase ? 4 : 6);
+      ctx.fillStyle = '#000';
+      ctx.fillRect(p.x + p.w - 6, p.y + 8, 3, 3);
+      p.legPhase = !p.legPhase;
+    }
 
-window.addEventListener('resize',()=>{
-  W=window.innerWidth; H=window.innerHeight;
-  canvas.width=W; canvas.height=H;
-});
-</script>
+    function drawTree(o) {
+      ctx.fillStyle = '#6b4f2f';
+      ctx.fillRect(o.x + o.w/2 - 5, o.y, 10, o.h);
+      ctx.fillStyle = '#228B22';
+      ctx.beginPath();
+      ctx.arc(o.x + o.w/2, o.y, 20, 0, Math.PI*2);
+      ctx.fill();
+    }
+
+    function drawCollectible(c) {
+      ctx.fillStyle = '#f59e0b';
+      ctx.beginPath();
+      ctx.arc(c.x + c.w/2, c.y + c.h/2, c.w/2, 0, Math.PI*2);
+      ctx.fill();
+      ctx.strokeStyle = '#fff';
+      ctx.lineWidth = 2;
+      ctx.stroke();
+      ctx.fillStyle = '#fff';
+      ctx.font = "bold 18px Share Tech Mono";
+      ctx.textAlign = "center";
+      ctx.textBaseline = "middle";
+      ctx.fillText(c.symbol, c.x + c.w/2, c.y + c.h/2);
+    }
+
+    function jump() {
+      if (player.onGround) {
+        player.vy = CONFIG.jump;
+        player.onGround = false;
+      }
+    }
+
+    function spawnEntity() {
+      const now = performance.now();
+      if (now - spawnTimer < 1000) return;
+      spawnTimer = now;
+      if (Math.random() < 0.5) {
+        collectibles.push({
+          x: canvas.width,
+          y: canvas.height - 60 - Math.random()*40,
+          w: 36, h: 36,
+          symbol: seq[seqIndex]
+        });
+        seqIndex = (seqIndex + 1) % seq.length;
+      } else {
+        obstacles.push({
+          x: canvas.width,
+          y: canvas.height - 50,
+          w: 30,
+          h: 50
+        });
+      }
+    }
+
+    function collision(a,b) {
+      return a.x < b.x+b.w && a.x+a.w > b.x && a.y < b.y+b.h && a.y+a.h > b.y;
+    }
+
+    function loop() {
+      ctx.clearRect(0,0,canvas.width,canvas.height);
+      if (running) spawnEntity();
+
+      for (let i=obstacles.length-1;i>=0;i--) {
+        const o = obstacles[i];
+        o.x -= CONFIG.speed;
+        drawTree(o);
+        if (collision(player,o)) {
+          obstacles.splice(i,1);
+          lives = Math.max(0, lives - 1);
+          livesEl.textContent = lives;
+          if (lives <= 0) endGame(false);
+        } else if (o.x + o.w < 0) {
+          obstacles.splice(i,1);
+        }
+      }
+
+      for (let i=collectibles.length-1;i>=0;i--) {
+        const c = collectibles[i];
+        c.x -= CONFIG.speed;
+        drawCollectible(c);
+        if (collision(player,c)) {
+          collectibles.splice(i,1);
+          score += 3;
+          scoreEl.textContent = score;
+          if (score >= CONFIG.goal) endGame(true);
+        } else if (c.x + c.w < 0) {
+          collectibles.splice(i,1);
+        }
+      }
+
+      player.vy += CONFIG.gravity;
+      player.y += player.vy;
+      if (player.y >= canvas.height - player.h - 16) {
+        player.y = canvas.height - player.h - 16;
+        player.vy = 0;
+        player.onGround = true;
+      }
+
+      drawDino(player);
+
+      if (running) requestAnimationFrame(loop);
+    }
+
+    function resetGame() {
+      running = false;
+      score = 0;
+      lives = 3;
+      obstacles = [];
+      collectibles = [];
+      player.y = canvas.height - player.h - 16;
+      player.vy = 0;
+      player.onGround = true;
+      scoreEl.textContent = score;
+      livesEl.textContent = lives;
+      overlay.style.display = 'none';
+      lastEndState = null;
+    }
+
+    function endGame(win) {
+      running = false;
+      overlay.style.display = 'flex';
+      lastEndState = win;
+      endMessage.textContent = win
+        ? (currentLang === 'pl' ? "WYGRAŁEŚ!" : "YOU WON!")
+        : (currentLang === 'pl' ? "PRZEGRAŁEŚ!" : "YOU LOST!");
+      finalBtn.style.display = win ? 'inline-block' : 'none';
+    }
+
+    document.getElementById('startBtn').addEventListener('click', ()=>{ if (!running) { running = true; requestAnimationFrame(loop); } });
+    document.getElementById('resetBtn').addEventListener('click', resetGame);
+    window.addEventListener('keydown', e=>{
+      if (e.code === 'Space') {
+        e.preventDefault();
+        if (!running) { running = true; requestAnimationFrame(loop); }
+        jump();
+      }
+    });
+    canvas.addEventListener('click', ()=>{ if (!running) { running = true; requestAnimationFrame(loop); } jump(); });
+    playAgain.addEventListener('click', ()=>{ resetGame(); running = true; requestAnimationFrame(loop); });
+    finalBtn.addEventListener('click', ()=>window.location.href='konieconline.html');
+
+    applyTranslation(currentLang);
+    resetGame();
+  </script>
 </body>
 </html>
