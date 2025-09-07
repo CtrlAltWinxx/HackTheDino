@@ -147,6 +147,7 @@
       right: 20px;
       z-index: 10;
     }
+
     #lang-switch button {
       background: transparent;
       border: 2px solid var(--primary-color);
@@ -158,9 +159,34 @@
       transition: all 0.3s ease;
       box-shadow: 0 0 10px var(--primary-color);
     }
+
     #lang-switch button:hover {
       background-color: var(--primary-color);
       color: #000;
+    }
+
+    /* Responsywne dostosowanie przycisku językowego */
+    @media (max-width: 768px) {
+      #lang-switch {
+        top: 10px;
+        right: 12px;
+      }
+      #lang-switch button {
+        padding: 4px 10px;
+        font-size: 0.8rem;
+        box-shadow: 0 0 6px var(--primary-color);
+      }
+    }
+
+    @media (max-width: 480px) {
+      #lang-switch {
+        top: 8px;
+        right: 8px;
+      }
+      #lang-switch button {
+        padding: 3px 8px;
+        font-size: 0.75rem;
+      }
     }
 
     /* Cyfry w tle – większe */
@@ -248,7 +274,6 @@
       const langBtn = document.getElementById("lang-btn");
 
       if (currentLang === "PL") {
-        // Angielska wersja
         intro.innerHTML = `
           Welcome, <strong>Stranger.</strong><br />
           We have intercepted your connection...<br /><br />
@@ -263,7 +288,6 @@
         langBtn.setAttribute("aria-label", "Przetłumacz na polski");
         currentLang = "EN";
       } else {
-        // Polska wersja
         intro.innerHTML = `
           Witaj, <strong>Nieznajomy.</strong><br />
           Przechwyciliśmy Twoje połączenie...<br /><br />
@@ -293,7 +317,7 @@
       digit.textContent = Math.floor(Math.random() * 10);
       document.body.appendChild(digit);
 
-      const size = randomRange(24, 48); // ZWIĘKSZONY ROZMIAR CYFR
+      const size = randomRange(24, 48);
       digit.style.fontSize = size + 'px';
 
       return {
