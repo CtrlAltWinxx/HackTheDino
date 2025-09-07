@@ -1,224 +1,329 @@
 <!DOCTYPE html>
 <html lang="pl">
 <head>
-  <meta charset="UTF-8" />
-  <title>Stacja 3</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Stacja 1</title>
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet">
   <link rel="icon" href="bhl.jpg" type="image/jpeg">
   <link rel="shortcut icon" href="bhl.jpg" type="image/jpeg">
   <style>
-    * { box-sizing: border-box; }
-
     html, body {
-      margin: 0; padding: 0; height: 100%;
+      margin: 0;
+      padding: 0;
+      height: 100%;
+    }
+    body {
+      font-family: 'Share Tech Mono', monospace;
       background-color: #0a0a0a;
       color: #00ffcc;
-      font-family: 'Share Tech Mono', monospace;
-      overflow: hidden;
+      min-height: 100vh;
+      overflow-x: hidden;
+      position: relative;
     }
-    canvas {
+
+    .matrix {
       position: fixed;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      z-index: 0;
-      will-change: transform;
+      inset: 0;
+      z-index: -1;
+      background: black;
     }
+
     .container {
-      max-width: 600px;
-      margin: 80px auto 40px;
-      padding: 24px 20px;
+      max-width: 800px;
+      margin: 100px auto;
+      padding: 20px 30px;
       text-align: center;
-      background: rgba(0,0,0,0.75);
+      background: rgba(0, 0, 0, 0.75);
       border: 2px solid #00ffcc;
       border-radius: 12px;
       box-shadow: 0 0 20px rgba(0,255,204,0.2);
-      position: relative;
-      z-index: 2;
     }
-    h2 { color: #ff0055; font-size: 28px; margin-bottom: 24px; font-weight: bold; }
-    p, code { font-size: 20px; font-weight: bold; }
+
+    h2 {
+      color: #ff0055;
+      font-size: 2rem;
+      margin-bottom: 20px;
+      font-weight: bold;
+    }
+
+    p, code {
+      font-size: 1.1rem;
+      font-weight: bold;
+      word-wrap: break-word;
+    }
+
+    code {
+      display: block;
+      margin: 10px 0;
+      font-size: 1.2rem;
+      line-height: 1.4;
+    }
+
     input {
-      width: 100%; padding: 12px; margin-top: 20px;
-      background: #000; border: 2px solid #00ffcc; color: #00ffcc;
-      border-radius: 8px; font-weight: bold; font-size: 18px;
+      background: #000;
+      border: 2px solid #00ffcc;
+      color: #00ffcc;
+      padding: 12px;
+      margin-top: 10px;
+      width: 100%;
+      font-size: 1rem;
+      font-weight: bold;
+      box-sizing: border-box;
+      border-radius: 6px;
     }
+
     button {
-      background: none; border: 2px solid #00ffcc; color: #00ffcc;
-      padding: 12px 30px; font-size: 18px; cursor: pointer; margin-top: 20px;
-      font-weight: bold; text-transform: uppercase; border-radius: 10px;
-    }
-    button:hover { background-color: #00ffcc; color: #000; }
-    .decoded {
-      margin-top: 30px; background: rgba(0,255,204,0.07); padding: 20px;
-      border: 1px solid #00ffcc; border-radius: 12px;
-      box-shadow: 0 0 12px rgba(0,255,204,0.35);
-      font-size: 18px; font-weight: bold; text-align: center;
-    }
-    .error { color: #ff3355; font-size: 18px; margin-top: 24px; font-weight: bold; }
-
-    /* 📱 Ulepszony wygląd na telefonach */
-    @media (max-width: 600px) {
-      .container {
-        margin: 40px 12px;
-        padding: 16px 14px;
-      }
-      h2 { font-size: 22px; margin-bottom: 16px; }
-      p, code { font-size: 16px; }
-      input, button { font-size: 16px; padding: 10px; }
-    }
-
-    /* 🔘 Przycisk języka */
-    #langToggle {
-      position: fixed;
-      top: 15px; right: 15px;
-      z-index: 3;
       background: none;
       border: 2px solid #00ffcc;
       color: #00ffcc;
-      padding: 6px 14px;
-      font-size: 14px;
+      padding: 12px 20px;
+      font-size: 1rem;
+      cursor: pointer;
+      margin-top: 15px;
       font-weight: bold;
+      text-transform: uppercase;
+      border-radius: 6px;
+      width: 100%;
+    }
+
+    button:hover {
+      background-color: #00ffcc;
+      color: #000;
+    }
+
+    .error {
+      color: red;
+      font-size: 1rem;
+      margin-top: 20px;
+      animation: blink 1s step-start infinite;
+      font-weight: bold;
+    }
+
+    @keyframes blink {
+      50% { opacity: 0; }
+    }
+
+    .decoded {
+      margin-top: 20px;
+      background-color: rgba(0,255,204,0.05);
+      padding: 15px;
+      border: 1px solid #00ffcc;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0,255,204,0.3);
+      font-size: 1rem;
+      font-weight: bold;
+      text-align: left;
+    }
+
+    /* 📱 Mobile adjustments */
+    @media (max-width: 600px) {
+      .container {
+        margin: 50px 10px;
+        padding: 15px;
+        border-radius: 8px;
+      }
+      h2 {
+        font-size: 1.5rem;
+      }
+      p, code {
+        font-size: 1rem;
+      }
+      code {
+        font-size: 1rem;
+      }
+    }
+
+    /* 🔘 Language switch */
+    #lang-switch {
+      position: fixed;
+      top: 15px;
+      right: 20px;
+      z-index: 10;
+    }
+    #lang-switch button {
+      background: transparent;
+      border: 2px solid #00ffcc;
+      color: #00ffcc;
+      padding: 6px 12px;
+      font-size: 0.9rem;
       border-radius: 8px;
       cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 0 10px #00ffcc;
     }
-    #langToggle:hover {
-      background: #00ffcc;
+    #lang-switch button:hover {
+      background-color: #00ffcc;
       color: #000;
+    }
+
+    /* Responsywne dostosowanie przycisku językowego */
+    @media (max-width: 768px) {
+      #lang-switch {
+        top: 10px;
+        right: 12px;
+      }
+      #lang-switch button {
+        padding: 4px 10px;
+        font-size: 0.8rem;
+        box-shadow: 0 0 6px #00ffcc;
+      }
+    }
+
+    @media (max-width: 480px) {
+      #lang-switch {
+        top: 8px;
+        right: 8px;
+      }
+      #lang-switch button {
+        padding: 3px 8px;
+        font-size: 0.75rem;
+      }
     }
   </style>
 </head>
 <body>
-  <canvas id="particles"></canvas>
-
-  <!-- 🔘 przycisk zmiany języka -->
-  <button id="langToggle">EN</button>
-
-  <div class="container" id="taskContainer">
-    <h2 id="title">&gt; STACJA [3/4] – SZYFR</h2>
-    <p id="instruction">Odszyfruj liczbowy kod, aby uzyskać hasło:</p>
-    <code>4-9-14-15-19-1-21-18-21-19</code>
-    <input id="dinoInput" type="text" placeholder="Twoja odpowiedź" />
-    <button id="checkBtn" onclick="checkDino()">SPRAWDŹ</button>
+  <div class="matrix">
+    <canvas id="matrixCanvas"></canvas>
   </div>
 
-  <div class="container" id="result" style="display:none"></div>
+  <!-- 🔘 Language switch -->
+  <div id="lang-switch">
+    <button onclick="toggleLang()" aria-label="Change language">PL / EN</button>
+  </div>
+
+  <div class="container" id="taskContainer">
+    <h2 id="stationTitle">&gt; STACJA [1/4] – SZYFR: 01000101</h2>
+    <p id="encodedLabel">Znaleziono zakodowany przekaz:</p>
+    <code>01000010 01001000 01001100 00100000 01000111 01101111 01100101 01110011 00100000 01010010 01100001 01110111 01110010</code>
+    <p id="decodeLabel">Odszyfruj i wpisz treść:</p>
+    <input type="text" id="binaryInput" placeholder="Twoja odpowiedź">
+    <button id="checkBtn" onclick="checkBinary()">SPRAWDŹ</button>
+  </div>
+
+  <div class="container" id="binaryResult" style="display:none"></div>
 
   <script>
-    let lang = "pl"; // domyślnie polski
+    let currentLang = "PL";
 
-    const texts = {
-      pl: {
-        title: "> STACJA [3/4] – SZYFR",
-        instruction: "Odszyfruj liczbowy kod, aby uzyskać hasło:",
-        placeholder: "Twoja odpowiedź",
-        check: "SPRAWDŹ",
-        correct: "ODPOWIEDŹ POPRAWNA",
-        next: "STACJA 4",
-        errorTitle: "███ SYSTEM ERROR ██",
-        wrong: "Błędna odpowiedź...",
-        retry: "> SPRÓBUJ PONOWNIE"
-      },
-      en: {
-        title: "> STATION [3/4] – CIPHER",
-        instruction: "Decrypt the numeric code to obtain the password:",
-        placeholder: "Your answer",
-        check: "CHECK",
-        correct: "CORRECT ANSWER",
-        next: "STATION 4",
-        errorTitle: "███ SYSTEM ERROR ██",
-        wrong: "Wrong answer...",
-        retry: "> TRY AGAIN"
-      }
-    };
-
-    document.getElementById("langToggle").addEventListener("click", () => {
-      lang = lang === "pl" ? "en" : "pl";
-      updateTexts();
-      document.getElementById("langToggle").innerText = lang === "pl" ? "EN" : "PL";
-    });
-
-    function updateTexts() {
-      const t = texts[lang];
-      document.getElementById("title").innerText = t.title;
-      document.getElementById("instruction").innerText = t.instruction;
-      document.getElementById("dinoInput").placeholder = t.placeholder;
-      document.getElementById("checkBtn").innerText = t.check;
-    }
-
-    const correctHash = "RGlub3NhdXJ1cw==";
-
-    function checkDino() {
-      const val = document.getElementById('dinoInput').value.trim().toLowerCase();
-      const task = document.getElementById('taskContainer');
-      const result = document.getElementById('result');
-      const decoded = atob(correctHash).toLowerCase();
-      const t = texts[lang];
-
-      task.style.display = 'none';
-      result.style.display = 'block';
-
-      if(val === decoded){
-        result.innerHTML = `
-          <div class="decoded">
-            <p style="color:#00ffcc; font-size:1.5rem; font-weight:bold;">${t.correct}</p>
-            <button onclick="location.href='online4.html'" style="margin-top:20px;">${t.next}</button>
-          </div>
-        `;
+    function toggleLang() {
+      if (currentLang === "PL") {
+        document.getElementById("stationTitle").innerHTML = "&gt; STATION [1/4] – CIPHER: 01000101";
+        document.getElementById("encodedLabel").textContent = "Encoded message found:";
+        document.getElementById("decodeLabel").textContent = "Decode and enter the message:";
+        document.getElementById("binaryInput").placeholder = "Your answer";
+        document.getElementById("checkBtn").textContent = "CHECK";
+        currentLang = "EN";
       } else {
-        result.innerHTML = `
-          <div class="error">
-            ${t.errorTitle}<br>
-            ${t.wrong}<br>
-            <button onclick="location.reload()">${t.retry}</button>
-          </div>
-        `;
+        document.getElementById("stationTitle").innerHTML = "&gt; STACJA [1/4] – SZYFR: 01000101";
+        document.getElementById("encodedLabel").textContent = "Znaleziono zakodowany przekaz:";
+        document.getElementById("decodeLabel").textContent = "Odszyfruj i wpisz treść:";
+        document.getElementById("binaryInput").placeholder = "Twoja odpowiedź";
+        document.getElementById("checkBtn").textContent = "SPRAWDŹ";
+        currentLang = "PL";
       }
     }
 
-    // ANIMACJA KULKI PORUSZAJĄCE SIĘ PO TLE
-    const canvas = document.getElementById('particles');
-    const ctx = canvas.getContext('2d');
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
+    function checkBinary() {
+      const val = document.getElementById('binaryInput').value.trim().toLowerCase();
+      const task = document.getElementById('taskContainer');
+      const result = document.getElementById('binaryResult');
 
-    class Particle {
-      constructor() {
-        this.x = Math.random() * canvas.width;
-        this.y = Math.random() * canvas.height;
-        this.radius = Math.random() * 3 + 1;
-        this.speedX = (Math.random() - 0.5) * 2;
-        this.speedY = (Math.random() - 0.5) * 2;
-      }
-      update() {
-        this.x += this.speedX;
-        this.y += this.speedY;
-        if(this.x < 0 || this.x > canvas.width) this.speedX *= -1;
-        if(this.y < 0 || this.y > canvas.height) this.speedY *= -1;
-      }
-      draw() {
-        ctx.beginPath();
-        ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-        ctx.fillStyle = '#00ffcc';
-        ctx.fill();
+      if (val === 'bhl goes rawr') {
+        task.style.display = 'none';
+        result.style.display = 'block';
+
+        if (currentLang === "PL") {
+          result.innerHTML = `
+            <div class="decoded">
+              <p>&gt; Odszyfrowano wiadomość</p>
+              <p>&gt; 🔓 Kod fragmentu: 06</p>
+              <p><em>“Mury tej twierdzy są świadkiem tysiąca inżynierskich tajemnic.<br>
+              Ceglane kolumny skrywają źródło kodu.<br>
+              Szukałeś odpowiedzi w chmurze, ale czas zejść na ziemię…”<br><br>
+              Kolejna stacja: 62C5+7X, Warszawa</em></p>
+            </div>
+          `;
+        } else {
+          result.innerHTML = `
+            <div class="decoded">
+              <p>&gt; Message decrypted</p>
+              <p>&gt; 🔓 Fragment code: 06</p>
+              <p><em>“The walls of this fortress hold a thousand engineering secrets.<br>
+              Brick columns conceal the source of the code.<br>
+              You searched for answers in the cloud, but now it’s time to come back down to earth…”<br><br>
+              Next station: 62C5+7X, Warsaw</em></p>
+            </div>
+          `;
+        }
+
+      } else {
+        task.style.display = 'none';
+        result.style.display = 'block';
+
+        if (currentLang === "PL") {
+          result.innerHTML = `
+            <div class="error">
+              ███ SYSTEM ERROR ██<br>
+              Błąd dekodowania...<br>
+              <button onclick="location.reload()">&gt; RESETUJ STACJĘ</button>
+            </div>
+          `;
+        } else {
+          result.innerHTML = `
+            <div class="error">
+              ███ SYSTEM ERROR ██<br>
+              Decoding error...<br>
+              <button onclick="location.reload()">&gt; RESET STATION</button>
+            </div>
+          `;
+        }
       }
     }
 
-    const particlesArray = [];
-    for(let i = 0; i < 100; i++) particlesArray.push(new Particle());
+    const canvas = document.getElementById("matrixCanvas");
+    const ctx = canvas.getContext("2d");
 
-    function animate() {
-      ctx.fillStyle = 'rgba(0, 0, 0, 0.1)';
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
-      particlesArray.forEach(p => { p.update(); p.draw(); });
-      requestAnimationFrame(animate);
-    }
-    animate();
-
-    window.addEventListener('resize', () => {
+    function resizeCanvas() {
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;
+    }
+    resizeCanvas();
+
+    const letters = "01";
+    const fontSize = 20;
+    const drops = [];
+
+    function initDrops() {
+      const columns = canvas.width / fontSize;
+      drops.length = 0;
+      for (let i = 0; i < columns; i++) drops[i] = 1;
+    }
+    initDrops();
+
+    function drawMatrix() {
+      ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      ctx.fillStyle = "#00ffcc";
+      ctx.font = fontSize + "px 'Share Tech Mono'";
+
+      for (let i = 0; i < drops.length; i++) {
+        const text = letters[Math.floor(Math.random() * letters.length)];
+        ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+        if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+          drops[i] = 0;
+        }
+        drops[i]++;
+      }
+    }
+
+    setInterval(drawMatrix, 50);
+    window.addEventListener('resize', () => {
+      resizeCanvas();
+      initDrops();
     });
   </script>
 </body>
 </html>
+
