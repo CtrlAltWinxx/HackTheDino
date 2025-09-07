@@ -6,7 +6,7 @@
 <title>Stacja 3</title>
 <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet">
 <link rel="icon" href="bhl.jpg" type="image/jpeg">
-  <link rel="shortcut icon" href="bhl.jpg" type="image/jpeg">
+<link rel="shortcut icon" href="bhl.jpg" type="image/jpeg">
 
 <style>
 body { margin:0; font-family:'Share Tech Mono', monospace; background: linear-gradient(135deg,#0f0c29,#302b63,#24243e); color:#00ffc8; display:flex; justify-content:center; align-items:center; height:100vh; overflow:hidden;}
@@ -61,7 +61,7 @@ let level = 1;
 let timer;
 let lang = 'PL';
 
-// WAŻNE: 7 sekund = 7000 ms
+// 7 sekund = 7000 ms
 let timeLimit = 7000; // 7 sekund
 
 function addLine(text){
@@ -127,6 +127,7 @@ function checkCommand(){
     addLine(lang==='PL' ? '🏁 Poziom ukończony!' : '🏁 Level completed!');
     clearTimeout(timer);
     currentCommand = '';
+    // pokaż przycisk STACJA 4 (kliknięcie przeniesie do online4.html)
     nextLevelBtn.style.display = 'inline-block';
     return;
   }
@@ -139,7 +140,14 @@ input.addEventListener('keydown', e=>{
 });
 
 function goNextLevel(){
-  // przykład przejścia dalej; możesz tu zwiększyć level i wystartować nowy poziom
+  // Jeżeli gracz ukończył poziom (przycisk pokazywany tylko po ukończeniu),
+  // przekieruj do online4.html
+  if(levelScore >= targetScore){
+    // opcjonalnie można tu dodać zapis wyniku do localStorage przed przekierowaniem
+    window.location.href = 'online4.html';
+    return;
+  }
+  // fallback (nie powinno się zwykle wykonać, bo przycisk jest ukryty dopóki poziom nie jest ukończony)
   level++;
   startBtn.style.display = 'inline-block';
   nextLevelBtn.style.display = 'none';
@@ -168,6 +176,8 @@ function toggleLang(){
 </script>
 </body>
 </html>
+
+
 
 
 
