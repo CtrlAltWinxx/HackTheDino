@@ -166,7 +166,7 @@
     color: #ff0055;
   }
 
-  /* przycisk języka */
+  
   #lang-switch {
     position: fixed;
     top: 15px;
@@ -189,7 +189,7 @@
     color: #000;
   }
 
-  /* Telefony */
+  
   @media (max-width: 600px) {
     .dino-sketch, .digit { display: none; }
     main { padding: 20px; box-shadow: 0 0 10px var(--primary); }
@@ -233,7 +233,7 @@
 
     function toggleLang() {
       if (currentLang === "PL") {
-        // Zmieniamy na EN
+        
         document.getElementById("title").innerHTML = "&gt;[MISSION PROTOCOL]";
         document.getElementById("intro").innerHTML = `
           🦖 You face <strong>four stations</strong>.<br>
@@ -252,7 +252,7 @@
         document.querySelector("#lang-switch button").textContent = "PL";
         currentLang = "EN";
       } else {
-        // Powrót na PL
+        
         document.getElementById("title").innerHTML = "&gt;[PROTOKÓŁ MISJI]";
         document.getElementById("intro").innerHTML = `
           🦖 Czekają na Ciebie <strong>cztery stacje</strong>.<br>
@@ -336,3 +336,4 @@
   </script>
 </body>
 </html>
+
