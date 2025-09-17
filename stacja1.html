@@ -150,35 +150,11 @@
       border-radius: 8px;
       cursor: pointer;
       transition: all 0.3s ease;
-      box-shadow: 0 0 10px #00ffcc;
+      box-shadow: 0 0 10px var(--primary-color);
     }
     #lang-switch button:hover {
       background-color: #00ffcc;
       color: #000;
-    }
-
-    /* Responsywne dostosowanie przycisku językowego */
-    @media (max-width: 768px) {
-      #lang-switch {
-        top: 10px;
-        right: 12px;
-      }
-      #lang-switch button {
-        padding: 4px 10px;
-        font-size: 0.8rem;
-        box-shadow: 0 0 6px #00ffcc;
-      }
-    }
-
-    @media (max-width: 480px) {
-      #lang-switch {
-        top: 8px;
-        right: 8px;
-      }
-      #lang-switch button {
-        padding: 3px 8px;
-        font-size: 0.75rem;
-      }
     }
   </style>
 </head>
@@ -224,12 +200,18 @@
       }
     }
 
+
+    const secretHash = "YmhsIGdvZXMgcmF3cg==";
+
     function checkBinary() {
       const val = document.getElementById('binaryInput').value.trim().toLowerCase();
       const task = document.getElementById('taskContainer');
       const result = document.getElementById('binaryResult');
 
-      if (val === 'bhl goes rawr') {
+   
+      const decoded = atob(secretHash);
+
+      if (val === decoded) {
         task.style.display = 'none';
         result.style.display = 'block';
 
@@ -281,6 +263,7 @@
       }
     }
 
+    // MATRIX ANIMATION
     const canvas = document.getElementById("matrixCanvas");
     const ctx = canvas.getContext("2d");
 
@@ -326,4 +309,3 @@
   </script>
 </body>
 </html>
-
