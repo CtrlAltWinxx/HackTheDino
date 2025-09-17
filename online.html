@@ -117,7 +117,7 @@
       text-align: center;
     }
 
-    /* Przycisk językowy */
+    
     #lang-switch {
       position: fixed;
       top: 15px;
@@ -140,7 +140,7 @@
       color: #000;
     }
 
-    /* dodatkowa optymalizacja na bardzo małe ekrany */
+    
     @media (max-width: 480px) {
       body {
         padding: 10px;
@@ -160,7 +160,7 @@
     <canvas id="matrixCanvas"></canvas>
   </div>
 
-  <!-- Przycisk języka -->
+  
   <div id="lang-switch">
     <button onclick="toggleLang()">EN</button>
   </div>
@@ -227,7 +227,7 @@
       }
     }
 
-    // LANG TOGGLE
+    
     function toggleLang() {
       const btn = document.querySelector("#lang-switch button");
 
@@ -250,7 +250,7 @@
       }
     }
 
-    // MATRIX ANIMATION
+    
     const canvas = document.getElementById("matrixCanvas");
     const ctx = canvas.getContext("2d");
 
@@ -296,3 +296,4 @@
   </script>
 </body>
 </html>
+
