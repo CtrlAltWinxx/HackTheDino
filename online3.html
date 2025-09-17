@@ -51,8 +51,6 @@ let commandsEN = ['inject()','bypassFirewall()','decrypt()','scanNetwork()','tra
 let currentCommands = commandsPL;
 let currentCommand = '';
 
-// levelScore = punkty w bieżącym poziomie (reset przy starcie poziomu)
-// totalScore = ogólny rachunek (nie resetowany; pokazuje też wartości ujemne)
 let levelScore = 0;
 let totalScore = 0;
 
@@ -61,8 +59,8 @@ let level = 1;
 let timer;
 let lang = 'PL';
 
-// 7 sekund = 7000 ms
-let timeLimit = 7000; // 7 sekund
+
+let timeLimit = 7000; 
 
 function addLine(text){
   const line = document.createElement('div');
@@ -71,24 +69,24 @@ function addLine(text){
   terminal.scrollTop = terminal.scrollHeight;
 }
 
-// Generowanie nowej komendy
+
 function newCommand(){
   currentCommand = currentCommands[Math.floor(Math.random()*currentCommands.length)];
   const timeMsg = lang==='PL' ? ` (masz ${timeLimit/1000}s)` : ` (${timeLimit/1000}s to type)`;
   addLine(`${lang==='PL' ? 'System: Wpisz →' : 'System: Enter →'} ${currentCommand}${timeMsg}`);
   clearTimeout(timer);
   timer = setTimeout(()=>{
-    // odejmij punkt zarówno od levelScore jak i od totalScore
+    
     levelScore--;
     totalScore--;
     addLine(lang==='PL' ? `⏰ Czas minął! Punkty (poziom): ${levelScore} | Razem: ${totalScore}` : `⏰ Time's up! Level points: ${levelScore} | Total: ${totalScore}`);
     updateStatus();
-    // generuj kolejną komendę
+    
     newCommand();
   }, timeLimit);
 }
 
-// Aktualizacja statusu pokazująca również punkty ujemne i ogólny rachunek
+
 function updateStatus(){
   if(lang === 'PL') {
     status.textContent = `Poziom: ${level} | Punkty: ${levelScore}/${targetScore} | Razem: ${totalScore}`;
@@ -99,7 +97,7 @@ function updateStatus(){
 
 function startLevel(){
   terminal.innerHTML = '';
-  // resetujemy tylko punkty poziomu — ogólny rachunek zostaje
+  
   levelScore = 0;
   startBtn.style.display = 'none';
   nextLevelBtn.style.display = 'none';
@@ -109,7 +107,7 @@ function startLevel(){
   input.focus();
 }
 
-// Sprawdzenie komendy wpisanej przez gracza
+
 function checkCommand(){
   if(!currentCommand) return;
   if(input.value.trim() === currentCommand){
@@ -127,7 +125,7 @@ function checkCommand(){
     addLine(lang==='PL' ? '🏁 Poziom ukończony!' : '🏁 Level completed!');
     clearTimeout(timer);
     currentCommand = '';
-    // pokaż przycisk STACJA 4 (kliknięcie przeniesie do online4.html)
+    
     nextLevelBtn.style.display = 'inline-block';
     return;
   }
@@ -140,14 +138,13 @@ input.addEventListener('keydown', e=>{
 });
 
 function goNextLevel(){
-  // Jeżeli gracz ukończył poziom (przycisk pokazywany tylko po ukończeniu),
-  // przekieruj do online4.html
+  
   if(levelScore >= targetScore){
-    // opcjonalnie można tu dodać zapis wyniku do localStorage przed przekierowaniem
+    
     window.location.href = 'online4.html';
     return;
   }
-  // fallback (nie powinno się zwykle wykonać, bo przycisk jest ukryty dopóki poziom nie jest ukończony)
+  
   level++;
   startBtn.style.display = 'inline-block';
   nextLevelBtn.style.display = 'none';
@@ -176,6 +173,7 @@ function toggleLang(){
 </script>
 </body>
 </html>
+
 
 
 
